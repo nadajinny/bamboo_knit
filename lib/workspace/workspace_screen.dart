@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../storage/my_storage_card.dart';
+import '../storage/storage_screen.dart';
 import 'workspace_card.dart';
 import 'workspace_empty_state.dart';
 import 'workspace_models.dart';
@@ -59,6 +61,12 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
     });
   }
 
+  void _openStorageScreen() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const StorageScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     final filteredItems = _filteredItems;
@@ -116,11 +124,20 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
                         ? const WorkspaceEmptyState()
                         : ListView.separated(
                             padding: const EdgeInsets.only(bottom: 84),
-                            itemCount: filteredItems.length,
+                            itemCount: filteredItems.length + 1,
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 10),
                             itemBuilder: (context, index) {
-                              final item = filteredItems[index];
+                              if (index == 0) {
+                                return MyStorageCard(
+                                  title: '내 보관함',
+                                  countText: '보유한 실 12  |  바늘 3',
+                                  icon: Icons.shopping_bag,
+                                  onTap: _openStorageScreen,
+                                );
+                              }
+
+                              final item = filteredItems[index - 1];
                               return WorkspaceCard(item: item);
                             },
                           ),
