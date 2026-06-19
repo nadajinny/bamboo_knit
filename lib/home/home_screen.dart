@@ -74,9 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: FilledButton(
                 onPressed: () {},
                 style: FilledButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: const Color(0xFF7B5C3E),
-                  side: const BorderSide(color: Color(0xFF7B5C3E), width: 2.2),
+                  backgroundColor: const Color(0xFF9C6840),
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 42,
                     vertical: 16,
