@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'app_shell.dart';
+import 'app/app_shell.dart';
 
 void main() {
   runApp(const MyApp());

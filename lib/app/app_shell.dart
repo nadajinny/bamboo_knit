@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
-import 'settings_screen.dart';
-import 'shopping_screen.dart';
-import 'workspace_screen.dart';
+import '../home/home_screen.dart';
+import '../settings/settings_screen.dart';
+import '../shopping/shopping_screen.dart';
+import '../workspace/workspace_screen.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
