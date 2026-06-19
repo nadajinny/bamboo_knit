@@ -42,6 +42,7 @@ class _AppShellState extends State<AppShell> {
           surfaceTintColor: Colors.white,
           shadowColor: Colors.transparent,
           elevation: 0,
+          indicatorColor: const Color(0xFF7B5C3E).withValues(alpha: 0.14),
           selectedIndex: _selectedIndex,
           onDestinationSelected: _onDestinationSelected,
           destinations: const [
