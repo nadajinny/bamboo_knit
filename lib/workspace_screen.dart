@@ -6,10 +6,16 @@ class WorkspaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SafeArea(
-      child: Center(
-        child: Text(
-          '작업대 화면',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
+      child: Padding(
+        padding: EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '작업대',
+              style: TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
+            ),
+          ],
         ),
       ),
     );
