@@ -65,3 +65,17 @@ class NeedleEntry {
     );
   }
 }
+
+class StorageAddResult {
+  const StorageAddResult._({required this.mode, this.yarn, this.needle});
+
+  const StorageAddResult.yarn(YarnEntry value)
+    : this._(mode: StorageMode.yarn, yarn: value);
+
+  const StorageAddResult.needle(NeedleEntry value)
+    : this._(mode: StorageMode.needle, needle: value);
+
+  final StorageMode mode;
+  final YarnEntry? yarn;
+  final NeedleEntry? needle;
+}

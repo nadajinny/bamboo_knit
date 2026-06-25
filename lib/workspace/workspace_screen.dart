@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../storage/my_storage_card.dart';
 import '../storage/storage_screen.dart';
+import 'workspace_add_screen.dart';
 import 'workspace_card.dart';
+import 'workspace_detail_screen.dart';
 import 'workspace_empty_state.dart';
 import 'workspace_models.dart';
+import 'workspace_seed_data.dart';
 
 class WorkspaceScreen extends StatefulWidget {
   const WorkspaceScreen({super.key});
@@ -15,30 +18,13 @@ class WorkspaceScreen extends StatefulWidget {
 
 class _WorkspaceScreenState extends State<WorkspaceScreen> {
   WorkspaceFilter _selectedFilter = WorkspaceFilter.all;
+  late List<WorkspaceItem> _items;
 
-  static const _items = [
-    WorkspaceItem(
-      title: '코바늘 가방',
-      durationText: '12시간 30분',
-      updatedText: '3일 전',
-      progress: 0.62,
-      status: WorkspaceStatus.inProgress,
-    ),
-    WorkspaceItem(
-      title: '목도리',
-      durationText: '5시간 10분',
-      updatedText: '어제',
-      progress: 0.28,
-      status: WorkspaceStatus.inProgress,
-    ),
-    WorkspaceItem(
-      title: '수세미 3종',
-      durationText: '3시간 40분',
-      updatedText: '2주 전',
-      progress: 1,
-      status: WorkspaceStatus.done,
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _items = List.of(initialWorkspaceItems);
+  }
 
   List<WorkspaceItem> get _filteredItems {
     switch (_selectedFilter) {
@@ -65,6 +51,42 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
     Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (context) => const StorageScreen()));
+  }
+
+  Future<void> _openAddScreen() async {
+    final result = await Navigator.of(context).push<WorkspaceItem>(
+      MaterialPageRoute(builder: (context) => const WorkspaceAddScreen()),
+    );
+
+    if (!mounted || result == null) {
+      return;
+    }
+
+    setState(() {
+      _items = [result, ..._items];
+    });
+  }
+
+  void _openDetailScreen(WorkspaceItem item) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => WorkspaceDetailScreen(
+          item: item,
+          onChanged: (updated) {
+            if (!mounted) {
+              return;
+            }
+
+            setState(() {
+              final index = _items.indexOf(item);
+              if (index != -1) {
+                _items[index] = updated;
+              }
+            });
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -138,7 +160,10 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
                               }
 
                               final item = filteredItems[index - 1];
-                              return WorkspaceCard(item: item);
+                              return WorkspaceCard(
+                                item: item,
+                                onTap: () => _openDetailScreen(item),
+                              );
                             },
                           ),
                   ),
@@ -151,7 +176,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 24, bottom: 24),
               child: FilledButton(
-                onPressed: () {},
+                onPressed: _openAddScreen,
                 style: FilledButton.styleFrom(
                   backgroundColor: const Color(0xFF9C6840),
                   foregroundColor: Colors.white,
